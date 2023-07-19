@@ -5,26 +5,26 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script src="https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+		<script src="//mrdoob.github.io/stats.js/build/stats.min.js" crossorigin="anonymous"></script>
+
 		<title>Document</title>
 	</head>
 
 	<body>
 		<div id="container">
-			<h1>Here's the Triangle:</h1>
-			<div id="webgpu-container" style="position: relative; display: block">
-				<canvas id="gfx-main" width="800" height="600"></canvas>
+			<h1>7938 rotating Triangles</h1>
+			<div id="scenes-container" style="display: flex; flex-direction: row; gap: 15px;">
+				<div id="webgpu-container" style="position: relative; display: block">
+					<h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;">WebGPU</h1>
+					<canvas id="gfx-main" width="600" height="600"></canvas>
+				</div>
 			</div>
-			<h2>Current Key: </h2>
-			<h2 id="key-label"></h2>
-			<hr>
-			<h2>Mouse X: </h2>
-			<h2 id="mouse-x-label"></h2>
-			<br>
-			<h2>Mouse Y: </h2>
-			<h2 id="mouse-y-label"></h2>
-			<hr>
 		</div>
 		<script src="dist/main.js"></script>
+	
 	</body>
 
 </html>

@@ -4,6 +4,7 @@ import { QuadMesh } from "./quad_mesh";
 import { mat4 } from "gl-matrix";
 import { Material } from "./material";
 import { object_types, RenderData } from "../model/definitions";
+import { ObjMesh } from "./obj_mesh";
 
 export class Renderer {
 
@@ -31,6 +32,7 @@ export class Renderer {
     // Assets
     triangleMesh: TriangleMesh;
     quadMesh: QuadMesh;
+    statueMesh: ObjMesh;
     triangleMaterial: Material;
     quadMaterial: Material;
     objectBuffer: GPUBuffer;
@@ -190,6 +192,9 @@ export class Renderer {
     async createAssets() {
         this.triangleMesh = new TriangleMesh(this.device);
         this.quadMesh = new QuadMesh(this.device);
+        this.statueMesh = new ObjMesh();
+        await this.statueMesh.initialize(this.device, "dist/models/statue.obj");
+        //await this.statueMesh.initialize(this.device, "dist/models/ground.obj");
         this.triangleMaterial = new Material();
         this.quadMaterial = new Material();
 
@@ -199,7 +204,7 @@ export class Renderer {
         });
 
         const modelBufferDescriptor: GPUBufferDescriptor = {
-            size: 64 * 1024,
+            size: 64 * 8192,
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
         };
         this.objectBuffer = this.device.createBuffer(modelBufferDescriptor);
@@ -237,7 +242,7 @@ export class Renderer {
 
         //make transforms
         const projection = mat4.create();
-        mat4.perspective(projection, Math.PI/4, 800/600, 0.1, 10);
+        mat4.perspective(projection, Math.PI/4, 600/600, 0.1, 200);
 
         const view = renderables.view_transform;
 
@@ -278,14 +283,26 @@ export class Renderer {
         );
         objects_drawn += renderables.object_counts[object_types.TRIANGLE];
 
-        //Triangles
-        renderpass.setVertexBuffer(0, this.quadMesh.buffer);
-        renderpass.setBindGroup(1, this.quadMaterial.bindGroup); 
-        renderpass.draw(
-            6, renderables.object_counts[object_types.QUAD], 
-            0, objects_drawn
-        );
-        objects_drawn += renderables.object_counts[object_types.QUAD];
+				// console.log('%crenderables.object_counts[object_types.TRIANGLE]', 'color:red;font-size:14px;', renderables.object_counts[object_types.TRIANGLE] );
+				// console.log('%cobjects_drawn', 'color:red;font-size:14px;', objects_drawn );
+
+        // //Triangles
+        // renderpass.setVertexBuffer(0, this.quadMesh.buffer);
+        // renderpass.setBindGroup(1, this.quadMaterial.bindGroup); 
+        // renderpass.draw(
+        //     6, renderables.object_counts[object_types.QUAD], 
+        //     0, objects_drawn
+        // );
+        // objects_drawn += renderables.object_counts[object_types.QUAD];
+
+        // //Statue
+        // renderpass.setVertexBuffer(0, this.statueMesh.buffer);
+        // renderpass.setBindGroup(1, this.triangleMaterial.bindGroup); 
+        // renderpass.draw(
+        //     this.statueMesh.vertexCount, 1, 
+        //     0, objects_drawn
+        // );
+        // objects_drawn += 1;
 
         renderpass.end();
     

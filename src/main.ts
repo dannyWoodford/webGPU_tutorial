@@ -27,3 +27,5 @@ function animate() {
 
 requestAnimationFrame( animate );
 
+console.log('webgpu stats', stats)
+// stats.domElement = canvas

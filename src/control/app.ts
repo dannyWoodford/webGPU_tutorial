@@ -72,25 +72,25 @@ export class App {
     }
 
     handle_keypress(event: JQuery.KeyDownEvent) {
-        this.keyLabel.innerText = event.code;
+        // this.keyLabel.innerText = event.code;
 
         if (event.code == "KeyW") {
-            this.forwards_amount = 0.02;
+            this.forwards_amount = 0.2;
         }
         if (event.code == "KeyS") {
-            this.forwards_amount = -0.02;
+            this.forwards_amount = -0.2;
         }
         if (event.code == "KeyA") {
-            this.right_amount = -0.02;
+            this.right_amount = -0.2;
         }
         if (event.code == "KeyD") {
-            this.right_amount = 0.02;
+            this.right_amount = 0.2;
         }
 
     }
 
     handle_keyrelease(event: JQuery.KeyUpEvent) {
-        this.keyLabel.innerText = event.code;
+        // this.keyLabel.innerText = event.code;
 
         if (event.code == "KeyW") {
             this.forwards_amount = 0;
@@ -108,11 +108,11 @@ export class App {
     }
 
     handle_mouse_move(event: MouseEvent) {
-        this.mouseXLabel.innerText = event.clientX.toString();
-        this.mouseYLabel.innerText = event.clientY.toString();
+        // this.mouseXLabel.innerText = event.clientX.toString();
+        // this.mouseYLabel.innerText = event.clientY.toString();
         
         this.scene.spin_player(
-            event.movementX / 3, event.movementY / 3
+            event.movementX / 20, event.movementY / 20
         );
     }
 
